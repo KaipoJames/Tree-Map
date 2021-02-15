@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "TreeMap_a73dcc56"
+        },
+        {
+            "name": "Rails server",
+            "type": "Ruby",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceRoot}/bin/rails",
+            "pathToRDebugIDE": "~/.asdf/shims/rdebug-ide",
+            "showDebuggerOutput": true,
+            "args": [
+                "server"
+            ]
+        }
+    ]
+}
