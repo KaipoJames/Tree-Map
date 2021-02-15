@@ -12,3 +12,7 @@ The workspace contains two folders by default, where:
 ## Dependency Management
 
 The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).
+
+## About Tree Maps
+
+To learn more about what tree maps are visit this [site](https://towardsdatascience.com/treemaps-why-and-how-cfb1e1c863e8https://towardsdatascience.com/treemaps-why-and-how-cfb1e1c863e8).
