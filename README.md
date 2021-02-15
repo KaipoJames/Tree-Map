@@ -1,6 +1,6 @@
-## Getting Started
+## Data Visualization with Tree Maps
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+A simple program that reads in a directory and displays the contents of the directory in a tree map fashion
 
 ## Folder Structure
 
