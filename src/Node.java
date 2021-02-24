@@ -2,12 +2,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Date;
 
 public class Node {
 
     String name;
     Integer size;
+    Date lastModified;
     Boolean isDirectory;
+    String fileType;
     ArrayList<Node> children;
     ArrayList<Double> childRelativeSizes;
 
@@ -15,6 +18,8 @@ public class Node {
         name = file.getName();
         children = new ArrayList<Node>();
         size = 0;
+        fileType = getFileType(file);
+        lastModified = new Date(file.lastModified());
         if (file.isFile() == true) {
             isDirectory = false;
             size = (int) file.length();
@@ -49,6 +54,14 @@ public class Node {
                 }
             }
         }
+    }
+
+    private String getFileType(File file) {
+        String name = file.getName();
+        if (name.lastIndexOf(".") != -1 && name.lastIndexOf(".") != 0)
+            return name.substring(name.lastIndexOf(".") + 1);
+        else
+            return "none";
     }
 
     public void childSizesRel(ArrayList<Node> kids) {

@@ -38,7 +38,6 @@ public class Vis extends JPanel implements MouseListener, MouseMotionListener {
 
     public void getRootNode(Node rootNode) {
         root = rootNode;
-        System.out.println("Got RootNote in Vis Class");
         drawn = true;
         repaint();
     }

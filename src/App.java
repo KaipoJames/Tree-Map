@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JFileChooser;
 import java.util.ArrayList;
 
 public class App {
@@ -13,6 +14,7 @@ public class App {
     private Vis mainPanel;
     private JFrame frame;
     private ArrayList<Node> nodes;
+    private JFileChooser chooseFile;
 
     public App() {
 
@@ -42,28 +44,37 @@ public class App {
         item1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // System.out.println("Just clicked menu item 1");
-                String path = "/Users/kaipojames/Documents/Development";
-                File file = new File(path);
-                if (file.canExecute() == true) {
-                    frame.setTitle("Tree Map for " + path);
-                    Node root = new Node(file);
-                    String[] path_children = file.list();
-                    Integer parent_size = 0;
-                    System.out.println("\nFILE Located\nCONTENTS:");
-                    for (String x : path_children) {
-                        String child_path = path + "/" + x;
-                        File child_file = new File(child_path);
-                        String file_type = getFileType(child_file);
-                        Node child = new Node(child_file);
-                        nodes.add(child);
-                        parent_size += child.size;
-                        System.out.println(child.name + " | " + child.size + " bytes | " + "Type: " + file_type);
+                chooseFile = new JFileChooser();
+                chooseFile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int option = chooseFile.showOpenDialog(frame);
+                if (option == JFileChooser.APPROVE_OPTION) {
+                    File chosenFile = chooseFile.getSelectedFile();
+                    System.out.println("Chosen File: " + chosenFile.getName());
+                    File file = new File(chosenFile.getAbsolutePath());
+                    if (file.canExecute() == true) {
+                        frame.setTitle("Tree Map for " + file);
+                        Node root = new Node(file);
+                        String[] path_children = file.list();
+                        Integer parent_size = 0;
+                        System.out.println("\nFILE Located\nCONTENTS:");
+                        for (String x : path_children) {
+                            String child_path = file + "/" + x;
+                            File child_file = new File(child_path);
+                            Node child = new Node(child_file);
+                            System.out.println("FILE TYPE: " + child.fileType);
+                            System.out.println("LAST MODIFIED: " + child.lastModified);
+                            nodes.add(child);
+                            parent_size += child.size;
+                            System.out.println(child.name + " | " + child.size + " bytes");
+                        }
+                        mainPanel.getRootNode(root);
+                        System.out.println("Total File Size: " + (parent_size / 1000) + " KB");
+                    } else {
+                        System.out.println("File/Path Not Found");
                     }
-                    mainPanel.getRootNode(root);
-                    System.out.println("Total File Size: " + (parent_size / 1000) + " KB");
                 } else {
-                    System.out.println("File/Path Not Found");
+                    System.out.println("Command Canceled");
+                    // label.setText("Open command canceled");
                 }
             }
         });
@@ -73,14 +84,6 @@ public class App {
         menuBar.add(fileMenu);
 
         return menuBar;
-    }
-
-    private String getFileType(File file) {
-        String name = file.getName();
-        if (name.lastIndexOf(".") != -1 && name.lastIndexOf(".") != 0)
-            return name.substring(name.lastIndexOf(".") + 1);
-        else
-            return "none";
     }
 
     public static void main(String[] args) {
