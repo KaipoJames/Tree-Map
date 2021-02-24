@@ -47,6 +47,7 @@ public class App {
                 File file = new File(path);
                 if (file.canExecute() == true) {
                     frame.setTitle("Tree Map for " + path);
+                    Node root = new Node(file);
                     String[] path_children = file.list();
                     Integer parent_size = 0;
                     System.out.println("\nFILE Located\nCONTENTS:");

@@ -1,5 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Node {
 
@@ -22,6 +24,28 @@ public class Node {
                 Node n = new Node(kid);
                 children.add(n);
                 size += (int) kid.length();
+            }
+        }
+    }
+
+    public void draw(Graphics2D g, double x, double y, double w, double h, String orientation) {
+        if (this.isDirectory == false) {
+            g.fillRect((int) x, (int) y, (int) w, (int) h);
+        } else {
+            if (orientation == "Horizontal") {
+                double pixelsPerBar = w / this.size;
+                for (Node child : this.children) {
+                    double childWidth = pixelsPerBar * child.size;
+                    child.draw(g, x, y, childWidth, h, "Vertical");
+                    x += childWidth;
+                }
+            } else {
+                double pixelsPerBar = h / this.size;
+                for (Node child : this.children) {
+                    double childHeight = pixelsPerBar * child.size;
+                    child.draw(g, x, y, w, childHeight, "Horizontal");
+                    y += childHeight;
+                }
             }
         }
     }
