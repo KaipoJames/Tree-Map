@@ -14,6 +14,7 @@ public class Node {
     public Node(File file) {
         name = file.getName();
         children = new ArrayList<Node>();
+        size = 0;
         if (file.isFile() == true) {
             isDirectory = false;
             size = (int) file.length();

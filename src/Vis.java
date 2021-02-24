@@ -20,6 +20,7 @@ public class Vis extends JPanel implements MouseListener, MouseMotionListener {
     private Point corner;
     private ArrayList<Node> content;
     private ArrayList<Double> relativeContent;
+    private Node root;
 
     private Boolean drawn;
 
@@ -33,6 +34,13 @@ public class Vis extends JPanel implements MouseListener, MouseMotionListener {
         content = new ArrayList<Node>();
         relativeContent = new ArrayList<Double>();
         drawn = false;
+    }
+
+    public void getRootNode(Node rootNode) {
+        root = rootNode;
+        System.out.println("Got RootNote in Vis Class");
+        drawn = true;
+        repaint();
     }
 
     public void setData(ArrayList<Node> data) {
@@ -76,22 +84,23 @@ public class Vis extends JPanel implements MouseListener, MouseMotionListener {
         final int w = getWidth();
 
         if (drawn == true) {
-            g.setColor(Color.BLUE);
-            int boxCount = relativeContent.size();
-            int xSpacing = w / (boxCount + 1);
-            int x = 0;
-            int childIndex = 0;
-            for (Double a : relativeContent) {
-                double rectHeight = h;
-                double rectWidth = a * 50;
-                System.out.println("\nWidth: " + w);
-                System.out.println("\nrectWidth: " + rectWidth);
-                g.setColor(Color.BLUE);
-                g.fillRect(x, 0, (int) rectWidth, (int) rectHeight);
-                g.setColor(Color.BLACK);
-                g.drawRect(x, 0, (int) rectWidth, (int) rectHeight);
-                x += rectWidth;
-            }
+            root.draw(g, 0, 0, getWidth(), getHeight(), "Horizontal");
+            // g.setColor(Color.BLUE);
+            // int boxCount = relativeContent.size();
+            // int xSpacing = w / (boxCount + 1);
+            // int x = 0;
+            // int childIndex = 0;
+            // for (Double a : relativeContent) {
+            // double rectHeight = h;
+            // double rectWidth = a * 50;
+            // System.out.println("\nWidth: " + w);
+            // System.out.println("\nrectWidth: " + rectWidth);
+            // g.setColor(Color.BLUE);
+            // g.fillRect(x, 0, (int) rectWidth, (int) rectHeight);
+            // g.setColor(Color.BLACK);
+            // g.drawRect(x, 0, (int) rectWidth, (int) rectHeight);
+            // x += rectWidth;
+            // }
             // for (Node a : content){
             // System.out.println("Node Size: " + a.size);
             // double rectHeight = h / 2;

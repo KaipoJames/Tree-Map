@@ -60,7 +60,7 @@ public class App {
                         parent_size += child.size;
                         System.out.println(child.name + " | " + child.size + " bytes | " + "Type: " + file_type);
                     }
-                    mainPanel.setData(nodes);
+                    mainPanel.getRootNode(root);
                     System.out.println("Total File Size: " + (parent_size / 1000) + " KB");
                 } else {
                     System.out.println("File/Path Not Found");
