@@ -6,11 +6,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import java.util.ArrayList;
 
 public class App {
 
     private Vis mainPanel;
     private JFrame frame;
+    private ArrayList<Node> nodes;
 
     public App() {
 
@@ -26,6 +28,8 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Tree Map");
         frame.setVisible(true);
+
+        nodes = new ArrayList<Node>();
     }
 
     private JMenuBar setupMenu() {
@@ -51,9 +55,11 @@ public class App {
                         File child_file = new File(child_path);
                         String file_type = getFileType(child_file);
                         Node child = new Node(child_file);
+                        nodes.add(child);
                         parent_size += child.size;
                         System.out.println(child.name + " | " + child.size + " bytes | " + "Type: " + file_type);
                     }
+                    mainPanel.setData(nodes);
                     System.out.println("Total File Size: " + (parent_size / 1000) + " KB");
                 } else {
                     System.out.println("File/Path Not Found");

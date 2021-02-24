@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -17,7 +18,10 @@ public class Vis extends JPanel implements MouseListener, MouseMotionListener {
     private Ellipse2D.Double seth;
     private Rectangle box;
     private Point corner;
-    private String[] file_content;
+    private ArrayList<Node> content;
+    private ArrayList<Double> relativeContent;
+
+    private Boolean drawn;
 
     public Vis() {
         super();
@@ -26,6 +30,29 @@ public class Vis extends JPanel implements MouseListener, MouseMotionListener {
         addMouseListener(this);
         addMouseMotionListener(this);
         box = null;
+        content = new ArrayList<Node>();
+        relativeContent = new ArrayList<Double>();
+        drawn = false;
+    }
+
+    public void setData(ArrayList<Node> data) {
+        content.clear();
+        content = data;
+        double max = 0;
+        for (Node a : content) {
+            Integer bytes = a.size;
+            System.out.println("\nSize: " + bytes);
+            if (bytes > max) {
+                max = bytes;
+            }
+        }
+        for (Node a : content) {
+            Double relativeSize = a.size / max;
+            relativeContent.add(relativeSize);
+            System.out.println("\nRelative Size: " + relativeSize);
+        }
+        drawn = true;
+        repaint();
     }
 
     public void setText(String t) {
@@ -47,11 +74,38 @@ public class Vis extends JPanel implements MouseListener, MouseMotionListener {
 
         final int h = getHeight();
         final int w = getWidth();
-        // for (var jerico : relativeScatterData) {
-        // int x = (int) (jerico.getX() * w);
-        // int y = (int) (h - (jerico.getY() * h));
-        // g.fillRect(x, y, 5, 5);
-        // }
+
+        if (drawn == true) {
+            g.setColor(Color.BLUE);
+            int boxCount = relativeContent.size();
+            int xSpacing = w / (boxCount + 1);
+            int x = 0;
+            int childIndex = 0;
+            for (Double a : relativeContent) {
+                double rectHeight = h;
+                double rectWidth = a * 50;
+                System.out.println("\nWidth: " + w);
+                System.out.println("\nrectWidth: " + rectWidth);
+                g.setColor(Color.BLUE);
+                g.fillRect(x, 0, (int) rectWidth, (int) rectHeight);
+                g.setColor(Color.BLACK);
+                g.drawRect(x, 0, (int) rectWidth, (int) rectHeight);
+                x += rectWidth;
+            }
+            // for (Node a : content){
+            // System.out.println("Node Size: " + a.size);
+            // double rectHeight = h / 2;
+            // double rectWidth = a.size / getWidth();
+            // childIndex++;
+            // System.out.println("\nWidth: " + w);
+            // System.out.println("\nrectWidth: " + rectWidth);
+            // g.setColor(Color.BLUE);
+            // g.fillRect(x, 0, (int) rectWidth, (int) rectHeight);
+            // g.setColor(Color.BLACK);
+            // g.drawRect(x, 0, (int) rectWidth, (int) rectHeight);
+            // x += rectWidth;
+            // }
+        }
     }
 
     @Override
