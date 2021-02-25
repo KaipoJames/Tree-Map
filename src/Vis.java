@@ -23,6 +23,7 @@ public class Vis extends JPanel implements MouseListener, MouseMotionListener {
     private Node root;
 
     private Boolean drawn;
+    private String colorScheme;
 
     public Vis() {
         super();
@@ -34,6 +35,7 @@ public class Vis extends JPanel implements MouseListener, MouseMotionListener {
         content = new ArrayList<Node>();
         relativeContent = new ArrayList<Double>();
         drawn = false;
+        colorScheme = "File Type";
     }
 
     public void getRootNode(Node rootNode) {
@@ -42,23 +44,12 @@ public class Vis extends JPanel implements MouseListener, MouseMotionListener {
         repaint();
     }
 
-    public void setData(ArrayList<Node> data) {
-        content.clear();
-        content = data;
-        double max = 0;
-        for (Node a : content) {
-            Integer bytes = a.size;
-            System.out.println("\nSize: " + bytes);
-            if (bytes > max) {
-                max = bytes;
-            }
-        }
-        for (Node a : content) {
-            Double relativeSize = a.size / max;
-            relativeContent.add(relativeSize);
-            System.out.println("\nRelative Size: " + relativeSize);
-        }
-        drawn = true;
+    public void repaintCanvas() {
+        repaint();
+    }
+
+    public void getColorScheme(String scheme) {
+        colorScheme = scheme;
         repaint();
     }
 
@@ -79,40 +70,10 @@ public class Vis extends JPanel implements MouseListener, MouseMotionListener {
         g.setColor(Color.BLACK);
         g.drawString(textToDisplay, 10, 20);
 
-        final int h = getHeight();
-        final int w = getWidth();
-
+        System.out.println("we");
         if (drawn == true) {
-            root.draw(g, 0, 0, getWidth(), getHeight(), "Horizontal");
-            // g.setColor(Color.BLUE);
-            // int boxCount = relativeContent.size();
-            // int xSpacing = w / (boxCount + 1);
-            // int x = 0;
-            // int childIndex = 0;
-            // for (Double a : relativeContent) {
-            // double rectHeight = h;
-            // double rectWidth = a * 50;
-            // System.out.println("\nWidth: " + w);
-            // System.out.println("\nrectWidth: " + rectWidth);
-            // g.setColor(Color.BLUE);
-            // g.fillRect(x, 0, (int) rectWidth, (int) rectHeight);
-            // g.setColor(Color.BLACK);
-            // g.drawRect(x, 0, (int) rectWidth, (int) rectHeight);
-            // x += rectWidth;
-            // }
-            // for (Node a : content){
-            // System.out.println("Node Size: " + a.size);
-            // double rectHeight = h / 2;
-            // double rectWidth = a.size / getWidth();
-            // childIndex++;
-            // System.out.println("\nWidth: " + w);
-            // System.out.println("\nrectWidth: " + rectWidth);
-            // g.setColor(Color.BLUE);
-            // g.fillRect(x, 0, (int) rectWidth, (int) rectHeight);
-            // g.setColor(Color.BLACK);
-            // g.drawRect(x, 0, (int) rectWidth, (int) rectHeight);
-            // x += rectWidth;
-            // }
+            System.out.println("us");
+            root.draw(g, 0, 0, getWidth(), getHeight(), "Horizontal", colorScheme);
         }
     }
 

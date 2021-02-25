@@ -15,6 +15,7 @@ public class App {
     private JFrame frame;
     private ArrayList<Node> nodes;
     private JFileChooser chooseFile;
+    private Node mainNode;
 
     public App() {
 
@@ -32,6 +33,7 @@ public class App {
         frame.setVisible(true);
 
         nodes = new ArrayList<Node>();
+        mainNode = new Node();
     }
 
     private JMenuBar setupMenu() {
@@ -39,6 +41,13 @@ public class App {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         JMenuItem item1 = new JMenuItem("Choose File");
+
+        JMenu colorMenu = new JMenu("Change Color");
+        JMenuItem item2 = new JMenuItem("By File Type");
+        JMenuItem item3 = new JMenuItem("By Last Modified");
+        JMenuItem item4 = new JMenuItem("By File Size");
+        JMenuItem item5 = new JMenuItem("No Color");
+        JMenuItem item6 = new JMenuItem("Random Color");
 
         // setup action listeners
         item1.addActionListener(new ActionListener() {
@@ -68,6 +77,8 @@ public class App {
                             System.out.println(child.name + " | " + child.size + " bytes");
                         }
                         mainPanel.getRootNode(root);
+                        mainNode.getColorOption("File Type");
+                        mainPanel.getColorScheme("File Type");
                         System.out.println("Total File Size: " + (parent_size / 1000) + " KB");
                     } else {
                         System.out.println("File/Path Not Found");
@@ -78,10 +89,61 @@ public class App {
                 }
             }
         });
+        item2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("clicked File Type");
+                mainNode.getColorOption("File Type");
+                mainPanel.getColorScheme("File Type");
+                // mainPanel.repaint(10000L);
+            }
+        });
+        item3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("clicked last Modified");
+                mainNode.getColorOption("Last Modified");
+                mainPanel.getColorScheme("Last Modified");
+                // mainPanel.repaint(10000L);
+            }
+        });
+        item4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("clicked File Size");
+                mainNode.getColorOption("File Size");
+                mainPanel.getColorScheme("File Size");
+                // mainPanel.repaint();
+            }
+        });
+        item5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("clicked No Color");
+                mainNode.getColorOption("No Color");
+                mainPanel.getColorScheme("No Color");
+                // mainPanel.repaint();
+            }
+        });
+        item6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Random Color");
+                mainNode.getColorOption("Random");
+                mainPanel.getColorScheme("Random");
+                // mainPanel.repaint();
+            }
+        });
 
         // now hook them all together
         fileMenu.add(item1);
         menuBar.add(fileMenu);
+        colorMenu.add(item2);
+        colorMenu.add(item3);
+        colorMenu.add(item4);
+        colorMenu.add(item5);
+        colorMenu.add(item6);
+        menuBar.add(colorMenu);
 
         return menuBar;
     }
